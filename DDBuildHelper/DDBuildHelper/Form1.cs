@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UnityModule;
 
-namespace DDDBuildTool
+namespace DDBuildHelper
 {
     public partial class Form1 : Form
     {
@@ -47,7 +47,7 @@ namespace DDDBuildTool
             if (result > 0.98)
             {
                 Debug.Print("目标检测的结果： " + result);
-                GameClick.Click(new Point(725+10,24+15));
+                MouseControl.Click(new Point(725 + 10, 24 + 15));
             }
             else
             {
@@ -57,7 +57,7 @@ namespace DDDBuildTool
 
         double MatchTemplate()
         {
-            game = GameCapture.Instance.game;         
+            game = GameCapture.Instance.game;
             Image<Gray, float> result = new Image<Gray, float>(game.Width, game.Height);
             result = game.MatchTemplate(tar, TemplateMatchingType.CcorrNormed);
             double min = 0;
@@ -66,10 +66,36 @@ namespace DDDBuildTool
             Point minp = new Point(0, 0);
             CvInvoke.MinMaxLoc(result, ref min, ref max, ref minp, ref maxp);
             //展示截图          
-            CvInvoke.Rectangle(game, new Rectangle( new Point(maxp.X, maxp.Y), new Size(200, 200)), new MCvScalar(0, 255, 255), 2);
+            CvInvoke.Rectangle(game, new Rectangle(new Point(maxp.X, maxp.Y), new Size(200, 200)), new MCvScalar(0, 255, 255), 2);
             this.imageBox1.Image = game;
-            Debug.Print(maxp.X +" "+ maxp.Y);
+            Debug.Print(maxp.X + " " + maxp.Y);
             return max;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string url = AppConst.WebUrl + "/Windows/resourcesbase/000.fbx";
+            HttpReqHelper.downloadFile(url, @"D:\000.fbx", delegate (string err)
+            {
+                MessageBox.Show("下载完了");
+            });
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MouseControl.Drag(new Point(333,133),new Vector2(1,1),100);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DDBuildHelper.Mission.Instance.start();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.textBox1.Focus();
+            Keybd.keybd_event(Keys.E, 0, 0, 0);
+            Keybd.keybd_event(Keys.E, 0, 2, 0);
         }
     }
 

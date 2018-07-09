@@ -26,3 +26,17 @@ C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelp
 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.csproj.CopyComplete
 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.exe
 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.pdb
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\bin\Debug\DDBuildHelper.exe.config
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\bin\Debug\DDBuildHelper.exe
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\bin\Debug\DDBuildHelper.pdb
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\bin\Debug\Emgu.CV.UI.dll
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\bin\Debug\Emgu.CV.World.dll
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\bin\Debug\LitJson.dll
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.Properties.Resources.resources
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.csproj.GenerateResource.cache
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.csproj.CopyComplete
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.exe
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.pdb
+C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\obj\Debug\DDBuildHelper.Form1.resources

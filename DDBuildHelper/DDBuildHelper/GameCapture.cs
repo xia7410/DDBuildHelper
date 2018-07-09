@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DDDBuildTool
+namespace DDBuildHelper
 {
     class GameCapture
     {
@@ -24,7 +24,7 @@ namespace DDDBuildTool
       //  public static int CenterY = 0;
 
         public Image<Bgr, Byte> game = null;
-        System.Timers.Timer timer = new System.Timers.Timer(ConstDefine.GameCaptureRefreshRate);
+        System.Timers.Timer timer = new System.Timers.Timer(AppConst.GameCaptureRefreshRate);
 
      //   Point m_mianFormLocation;
       //  Size m_mianFormSize;

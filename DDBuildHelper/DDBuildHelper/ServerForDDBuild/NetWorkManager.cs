@@ -56,7 +56,7 @@ namespace UnityModule
             while (true)
             {
                 clientSocket = tcpServer.Accept();
-                Debug.Print("客户端已连接");
+                Debug.Print("DDBuild已连接");
                 ReceiveMessage();
                 // clientSocket = new UnityClient(clientSocket);
             }
@@ -83,7 +83,7 @@ namespace UnityModule
                 }
                 catch (Exception)
                 {
-                    Debug.Print("unity断开");
+                    Debug.Print("DDBuild断开");
                    // UnityManager.Instance.onUnityClosed();
                     break;
                 }
