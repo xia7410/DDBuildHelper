@@ -1,0 +1,13 @@
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\bin\Debug\DDDBuildTool.exe.config
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\bin\Debug\DDDBuildTool.exe
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\bin\Debug\DDDBuildTool.pdb
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\obj\Debug\DDDBuildTool.Properties.Resources.resources
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\obj\Debug\DDDBuildTool.csproj.GenerateResource.cache
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\obj\Debug\DDDBuildTool.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\obj\Debug\DDDBuildTool.exe
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\obj\Debug\DDDBuildTool.pdb
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\bin\Debug\Emgu.CV.UI.dll
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\bin\Debug\Emgu.CV.World.dll
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\obj\Debug\DDDBuildTool.Form1.resources
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\obj\Debug\DDDBuildTool.csproj.CopyComplete
+C:\Users\Administrator\Desktop\DDDBuildTool\DDDBuildTool\obj\Debug\DDDBuildTool.csprojResolveAssemblyReference.cache
