@@ -53,6 +53,7 @@ namespace DDBuildHelper
             {
                 Debug.Print("目标检测的结果： " + result);
             }
+          
         }
 
         double MatchTemplate()

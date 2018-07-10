@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,8 +23,20 @@ namespace DDBuildHelper
     {
         #region 属性
         int missionIndex = 0;
-        Thread requestMissionTh;
-       public MissionModel mission;
+        public Point ProjectPosition = new Point();//Project的位置，此位置很重要，后续多个操作都依赖此相对位置，所以保存下来。
+        public MissionModel mission;
+
+
+        Emgu.CV.Image<Bgr, byte> game;
+        public Point MatchTemplatePosition;//模板匹配到的位置
+
+
+
+
+
+
+
+        Thread requestMissionTh;      
         bool getMission = false;//是否获取了任务
         #endregion
 
@@ -91,13 +106,39 @@ namespace DDBuildHelper
                 case 4:
                     Mission4.mission();
                     break;
+                case 5:
+                    Mission5.mission();
+                    break;
+                case 6:
+                    Mission6.mission();
+                    break;
                 default:
                     break;
             }
         }
 
 
-
+        public double MatchTemplate(Emgu.CV.Image<Bgr, byte> tar)
+        {
+            game = GameCapture.Instance.game;
+            Emgu.CV.Image<Gray, float> result = new Emgu.CV.Image<Gray, float>(game.Width, game.Height);
+            result = game.MatchTemplate(tar, TemplateMatchingType.CcorrNormed);
+            double min = 0;
+            double max = 0;
+            Point maxp = new Point(0, 0);
+            Point minp = new Point(0, 0);
+            Emgu.CV.CvInvoke.MinMaxLoc(result, ref min, ref max, ref minp, ref maxp);
+            ////展示截图          
+            //CvInvoke.Rectangle(game, new Rectangle(new Point(maxp.X, maxp.Y), new Size(200, 200)), new MCvScalar(0, 255, 255), 2);
+            //this.imageBox1.Image = game;
+            //Debug.Print(maxp.X + " " + maxp.Y);
+            MatchTemplatePosition = maxp;
+            if (Mission.Instance.ProjectPosition.X == 0 && Mission.Instance.ProjectPosition.Y == 0)
+            {
+                Mission.Instance.ProjectPosition = maxp;
+            }
+            return max;
+        }
 
 
 

@@ -68,6 +68,8 @@
     <Compile Include="Missions\Mission2.cs" />
     <Compile Include="Missions\Mission3.cs" />
     <Compile Include="Missions\Mission4.cs" />
+    <Compile Include="Missions\Mission5.cs" />
+    <Compile Include="Missions\Mission6.cs" />
     <Compile Include="MouseControl.cs" />
     <Compile Include="HttpReqHelper.cs" />
     <Compile Include="ServerForDDBuild\ByteArray.cs" />
@@ -115,10 +117,13 @@
     <None Include="Resources\m4_2.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\m4_3.png" />
+    <None Include="Resources\m4_3.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\m4_3.jpg" />
+    <None Include="Resources\m5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\m6.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

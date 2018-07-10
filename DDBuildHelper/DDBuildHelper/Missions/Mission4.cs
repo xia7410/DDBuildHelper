@@ -17,9 +17,8 @@ namespace DDBuildHelper
     {
         static Image<Bgr, byte> tar;
         static Image<Bgr, byte> game;
-        static int waitUnityLoadFbx = 3000;//等待unity读取fbx的时间。
-        static Point MatchTemplatePosition;//模板匹配到的位置
-        static Point ProjectPosition = new Point();//Project的位置，此位置很重要，后续多个操作都依赖此相对位置，所以保存下来。
+        static int waitUnityLoadFbx = 5000;//等待unity读取fbx的时间。
+     
 
 
         //任务4 拖拽预制体
@@ -29,13 +28,13 @@ namespace DDBuildHelper
             Thread.Sleep(waitUnityLoadFbx);
 
             //点选.res文件夹
-            tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m4);
-            double result = MatchTemplate();
+            tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m4);//先找到project位置
+            double result =Mission.Instance. MatchTemplate(tar);
             if (result > 0.98)
             {
                 Debug.Print("目标检测的结果： " + result);
-                MouseControl.Click(new Point(30, MatchTemplatePosition.Y + 250));//点选.res文件夹
-                MouseControl.Click(new Point(30, MatchTemplatePosition.Y + 250));//点选.res文件夹  这里必须点两下！！！              
+                MouseControl.Click(new Point(30, Mission.Instance.MatchTemplatePosition.Y + 250));//点选.res文件夹
+                MouseControl.Click(new Point(30, Mission.Instance.MatchTemplatePosition.Y + 250));//点选.res文件夹  这里必须点两下！！！              
             }
             else
             {
@@ -44,14 +43,14 @@ namespace DDBuildHelper
             }
             //进行拖拽，找到拖拽点
             Thread.Sleep(200);
-            MouseControl.Click(new Point(ProjectPosition.X, ProjectPosition.Y-100)); //拖拽之前先点击一下hierarchy面板
+            MouseControl.Click(new Point(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y-100)); //拖拽之前先点击一下hierarchy面板
             tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m4_2);
             Thread.Sleep(500);
-            result = MatchTemplate();
+            result = Mission.Instance.MatchTemplate(tar);
             if (result > 0.98)
             {
                 Debug.Print("目标检测的结果： " + result);
-                MouseControl.Drag(new Point(MatchTemplatePosition.X + 20, MatchTemplatePosition.Y + 5), new Vector2(-1, -1), 120, onDragedToHierarchy);
+                MouseControl.Drag(new Point(Mission.Instance.MatchTemplatePosition.X + 20, Mission.Instance.MatchTemplatePosition.Y + 5), new Vector2(-1, -1), 120, onDragedToHierarchy);
             }
             else
             {
@@ -91,11 +90,11 @@ namespace DDBuildHelper
         static void dragToBundleFolder() {
             Thread.Sleep(500);
             tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m4_3);
-            double result = MatchTemplate();
+            double result = Mission.Instance.MatchTemplate(tar);
             if (result > 0.98)
             {
                 Debug.Print("目标检测的结果： " + result);
-                MouseControl.Drag2(new Vector2(MatchTemplatePosition.X+5, MatchTemplatePosition.Y+5), new Vector2(ProjectPosition.X, ProjectPosition.Y + 235), ondragedToBundleFolder);
+                MouseControl.Drag2(new Vector2(Mission.Instance.MatchTemplatePosition.X+5, Mission.Instance.MatchTemplatePosition.Y+5), new Vector2(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y + 235), ondragedToBundleFolder);
             }
             else
             {
@@ -109,26 +108,5 @@ namespace DDBuildHelper
             Mission.Instance.moveNext();
         }
 
-        static double MatchTemplate()
-        {
-            game = GameCapture.Instance.game;
-            Image<Gray, float> result = new Image<Gray, float>(game.Width, game.Height);
-            result = game.MatchTemplate(tar, TemplateMatchingType.CcorrNormed);
-            double min = 0;
-            double max = 0;
-            Point maxp = new Point(0, 0);
-            Point minp = new Point(0, 0);
-            CvInvoke.MinMaxLoc(result, ref min, ref max, ref minp, ref maxp);
-            ////展示截图          
-            //CvInvoke.Rectangle(game, new Rectangle(new Point(maxp.X, maxp.Y), new Size(200, 200)), new MCvScalar(0, 255, 255), 2);
-            //this.imageBox1.Image = game;
-            //Debug.Print(maxp.X + " " + maxp.Y);
-            MatchTemplatePosition = maxp;
-            if (ProjectPosition.X==0 && ProjectPosition.Y==0)
-            {
-                ProjectPosition = maxp;
-            }
-            return max;
-        }
     }
 }
