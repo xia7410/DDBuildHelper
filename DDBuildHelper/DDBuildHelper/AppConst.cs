@@ -18,9 +18,9 @@ public class AppConst
 
 
 
-    public static Point focuspos1 = new Point(800,1417);
+    public static Point focuspos1 = new Point(1000,1417);
 
-    public static Point focuspos2 = new Point(800,1355);
+    public static Point focuspos2 = new Point(1000,1355);
     //技能槽的位置
     //public static Point[] skillSlotPosition = new Point[] { new Point(), new Point(1030, 160), new Point(1030, 220), new Point(1030, 300), new Point(1030, 360), new Point(1030, 420), new Point(1030, 500), new Point(1030, 560) };
 

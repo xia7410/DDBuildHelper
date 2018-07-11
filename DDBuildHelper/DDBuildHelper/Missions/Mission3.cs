@@ -14,9 +14,9 @@ namespace DDBuildHelper
         //任务3 下载fbx文件
         public static void mission()
         {
-            string url = AppConst.WebUrl + "/Windows/resourcesbase/" + Mission.Instance.mission.fileName;
-            string code = Mission.Instance.mission.fileName.Substring(0, Mission.Instance.mission.fileName.IndexOf('.'));
-            string path = AppConst.ddBuildResourcesPath + code + @"_MX1.res\" + Mission.Instance.mission.fileName;
+            string url = AppConst.WebUrl + "/Windows/resourcesbase/" + Mission.Instance.buildModel.FileName;
+            string code = Mission.Instance.buildModel.FileName.Substring(0, Mission.Instance.buildModel.FileName.IndexOf('.'));
+            string path = AppConst.ddBuildResourcesPath + code + @"_MX1.res\" + Mission.Instance.buildModel.FileName;
             HttpReqHelper.downloadFile(url, path, delegate (string err)
             {
                 if (err != null)

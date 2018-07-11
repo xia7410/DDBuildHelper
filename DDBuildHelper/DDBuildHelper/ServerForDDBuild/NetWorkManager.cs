@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace UnityModule
+namespace DDBuildHelper
 {
     public class ServerForUnity
     {
@@ -115,51 +115,22 @@ namespace UnityModule
 
         void onMessage(SocketModel model)
         {
-            // Debug.Print("收到：" + model.Message);
+            Debug.Print("收到：" + model.Message);
             switch (model.Type)
             {
-                //case Protocol.SELF_INFO:
-                //    Debug.Print("unity请求个人信息");
-                //    if (model.Command == 0)
-                //    {
-                //        Debug.Print("编辑器模式");
-                //        UnityManager.Instance.unityMode = 0;
-                //    }
-                //    if (model.Command == 1)
-                //    {
-                //        Debug.Print("exe模式");
-                //        //if (UnityManager.Instance.isUnityShow == false)
-                //        //{//还没开启unity，unity就来了
-                //        //    SendMessage(UnityProtocol.CLOSE_UNITY, 0, 0, "");
-                //        //    Debug.Print("非法请求，还没开始，unity自己来了，关闭unity");
-                //        //    return;
-                //        //}
-                //        UnityManager.Instance.unityMode = 1;
-                //        try
-                //        {
-                //            Debug.Print("修改Unity标题" + model.Message);
-                //            Process[] ps = Process.GetProcessesByName("叮叮鸟");
-                //            foreach (Process p in ps)//遍历进程
-                //            {
-                //                SetWindowText(p.MainWindowHandle, "叮叮鸟------虚拟家装设计------免费共享平台------powered by H+ technology" + "      V" + model.Message);
-                //            }
-                //        }
-                //        catch (Exception err)
-                //        {
-                //            Debug.Print("设置Unity Text错误：" + err.ToString());
-                //        }
-                //    }
-                //    //返回个人信息
-                //    Debug.Print("返回的个人信息是" + AppInfo.USER_NAME + "网络模式" + UnityManager.Instance.netMode);
-                //    SendMessage(UnityProtocol.SELF_INFO, 0, UnityManager.Instance.netMode, AppInfo.USER_NAME);
-                //    break;
+                case Protocol.BUILD_INFO:
+                    Debug.Print("unity请求打包信息");
+                    //返回打包信息
+                    string msg = Coding<BuildModel>.encode(Mission.Instance.buildModel);
+
+                    SendMessage(Protocol.BUILD_INFO, 0, 0, msg);
+                    break;
                 //case UnityProtocol.UNITY_QUIT:
                 //    Debug.Print("unity自己退出了...");
                 //    UnityManager.Instance.onUnityClosed();
-
                 //    break;
                 default:
-                    Debug.Print("未知unity协议...");
+                    Debug.Print("未知DDBuild协议...");
                     break;
             }
         }

@@ -28,8 +28,8 @@ namespace DDBuildHelper
             game = GameCapture.Instance.game;
             Image<Bgr, byte> preImg = game.Copy(new Rectangle( new Point (900,168), new Size (600,600)));
             //保存截图
-            string code = Mission.Instance.mission.fileName.Substring(0, Mission.Instance.mission.fileName.IndexOf('.'));
-            string path = AppConst.ddBuildResourcesPath + code + @"_FA1_pre.bundle\pre.jpg";
+            string code = Mission.Instance.buildModel.FileName.Substring(0, Mission.Instance.buildModel.FileName.IndexOf('.'));
+            string path = AppConst.ddBuildResourcesPath + code + @"_FA1pre.bundle\pre.jpg";
             preImg.ToBitmap().Save(path);
             Thread.Sleep(200);
             //切换焦点

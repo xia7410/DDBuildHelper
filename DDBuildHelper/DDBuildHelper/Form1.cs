@@ -11,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UnityModule;
 
 namespace DDBuildHelper
 {
@@ -29,6 +28,11 @@ namespace DDBuildHelper
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            int x = (2100);
+            int y = (700);
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = (Point)new Size(x, y);
+
             //开启截屏
             GameCapture.Instance.init(this.Location, this.Size);
             GameCapture.Instance.start();
@@ -92,12 +96,7 @@ namespace DDBuildHelper
             DDBuildHelper.Mission.Instance.start();
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            this.textBox1.Focus();
-            Keybd.keybd_event(Keys.E, 0, 0, 0);
-            Keybd.keybd_event(Keys.E, 0, 2, 0);
-        }
+      
     }
 
 

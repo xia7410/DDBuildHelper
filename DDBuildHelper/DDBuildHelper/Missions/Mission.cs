@@ -13,9 +13,18 @@ using System.Threading.Tasks;
 namespace DDBuildHelper
 {
 
-    public struct MissionModel {
-        public string fileName;
-
+    public struct BuildModel {
+        public string Username;
+        public int lib;
+        public string FileName;
+        public string Name;
+        public int Maintype;
+        public int Sell;
+        public double Price;
+        public double Length;
+        public double Width;
+        public double Height;
+        public string Tags;
     }
 
 
@@ -24,7 +33,7 @@ namespace DDBuildHelper
         #region 属性
         int missionIndex = 0;
         public Point ProjectPosition = new Point();//Project的位置，此位置很重要，后续多个操作都依赖此相对位置，所以保存下来。
-        public MissionModel mission;
+        public BuildModel buildModel;
 
 
         Emgu.CV.Image<Bgr, byte> game;
@@ -77,8 +86,18 @@ namespace DDBuildHelper
             //    }
             //}
             missionIndex = 0;
-            mission = new MissionModel();
-            mission.fileName = "000.fbx";
+            buildModel = new BuildModel();
+            buildModel.Username = "55555";
+            buildModel.lib = 2;
+            buildModel.FileName = "000.fbx";
+            buildModel.Name = "测试商品";
+            buildModel.Maintype = 199;
+            buildModel.Sell = 0;
+            buildModel.Price = 999;
+            buildModel.Length = 12;
+            buildModel.Width = 13;
+            buildModel.Height = 14;
+            buildModel.Tags = "自助上传";
             moveNext();
         }
     
@@ -111,6 +130,9 @@ namespace DDBuildHelper
                     break;
                 case 6:
                     Mission6.mission();
+                    break;
+                case 7:
+                    Mission7.mission();
                     break;
                 default:
                     break;

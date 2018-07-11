@@ -16,7 +16,6 @@ namespace DDBuildHelper
     public class Mission4
     {
         static Image<Bgr, byte> tar;
-        static Image<Bgr, byte> game;
         static int waitUnityLoadFbx = 5000;//等待unity读取fbx的时间。
      
 

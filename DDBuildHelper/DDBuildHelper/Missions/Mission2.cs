@@ -18,10 +18,10 @@ namespace DDBuildHelper
         //任务2 建立打包目录
         public static void mission()
         {
-            string code = Mission.Instance.mission.fileName.Substring(0,Mission.Instance.mission.fileName.IndexOf('.'));
+            string code = Mission.Instance.buildModel.FileName.Substring(0,Mission.Instance.buildModel.FileName.IndexOf('.'));
             System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath+ code + "_MX1.bundle");
             System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_MX1.res");
-            System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_FA1_pre.bundle");
+            System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_FA1pre.bundle");
             Mission.Instance.moveNext();
         }
 

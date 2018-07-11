@@ -17,7 +17,6 @@ namespace DDBuildHelper
 
         #region 属性
         static Image<Bgr, byte> tar;
-        static Image<Bgr, byte> game;
         static System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         #endregion
 
@@ -52,6 +51,8 @@ namespace DDBuildHelper
                 //点击确定按钮
                 Keybd.keybd_event(Keys.Enter, 0, 0, 0);
                 Keybd.keybd_event(Keys.Enter, 0, 2, 0);
+
+                Mission.Instance.moveNext();
             }
         }
 
