@@ -32,8 +32,8 @@ namespace DDBuildHelper
             if (result > 0.98)
             {
                 Debug.Print("目标检测的结果： " + result);
-                MouseControl.Click(new Point(30, Mission.Instance.MatchTemplatePosition.Y + 250));//点选.res文件夹
-                MouseControl.Click(new Point(30, Mission.Instance.MatchTemplatePosition.Y + 250));//点选.res文件夹  这里必须点两下！！！              
+                MouseControl.Click(new Point(30, Mission.Instance.MatchTemplatePosition.Y + 230));//点选.res文件夹
+                MouseControl.Click(new Point(30, Mission.Instance.MatchTemplatePosition.Y + 230));//点选.res文件夹  这里必须点两下！！！              
             }
             else
             {
@@ -93,7 +93,12 @@ namespace DDBuildHelper
             if (result > 0.98)
             {
                 Debug.Print("目标检测的结果： " + result);
-                MouseControl.Drag2(new Vector2(Mission.Instance.MatchTemplatePosition.X+5, Mission.Instance.MatchTemplatePosition.Y+5), new Vector2(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y + 235), ondragedToBundleFolder);
+                //拖拽回去之前先双击，方便截图
+                MouseControl.Click(new Point(Mission.Instance.MatchTemplatePosition.X + 5, Mission.Instance.MatchTemplatePosition.Y + 5));
+                Thread.Sleep(100);
+                MouseControl.Click(new Point(Mission.Instance.MatchTemplatePosition.X + 5, Mission.Instance.MatchTemplatePosition.Y + 5));
+                //进行拖拽
+                MouseControl.Drag2(new Vector2(Mission.Instance.MatchTemplatePosition.X+5, Mission.Instance.MatchTemplatePosition.Y+5), new Vector2(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y + 215), ondragedToBundleFolder);
             }
             else
             {
@@ -103,7 +108,8 @@ namespace DDBuildHelper
         }
 
         //将预制体拖拽到.bundle文件夹后调用
-        static void ondragedToBundleFolder() {
+        static void ondragedToBundleFolder()
+        {         
             Mission.Instance.moveNext();
         }
 

@@ -31,12 +31,16 @@ namespace DDBuildHelper
             string code = Mission.Instance.buildModel.FileName.Substring(0, Mission.Instance.buildModel.FileName.IndexOf('.'));
             string path = AppConst.ddBuildResourcesPath + code + @"_FA1pre.bundle\pre.jpg";
             preImg.ToBitmap().Save(path);
+            //删掉hierarchy面板中的model
+            MouseControl.Click(new Point(Mission.Instance.MatchTemplatePosition.X + 5, Mission.Instance.MatchTemplatePosition.Y + 5));
+            Keybd.keybd_event(Keys.Delete, 0, 0, 0);
+            Keybd.keybd_event(Keys.Delete, 0, 2, 0);
             Thread.Sleep(200);
             //切换焦点
             MouseControl.Click(AppConst.focuspos1);
             Thread.Sleep(500);
             //点击_pre.bundle文件夹
-            MouseControl.Click(new Point(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y + 217));
+            MouseControl.Click(new Point(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y + 197));
             Thread.Sleep(1000);
             //点击pre图片，随后进行设置
             tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m5);//先找到project位置

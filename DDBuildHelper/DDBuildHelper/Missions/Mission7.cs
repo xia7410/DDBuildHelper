@@ -41,7 +41,7 @@ namespace DDBuildHelper
                     ((System.Windows.Forms.Timer)sen).Stop();
                     ((System.Windows.Forms.Timer)sen).Dispose();
                     //unity 已经启动，点击上传文件按钮
-                    MouseControl.Click(new Point(635, 1111));
+                    MouseControl.Click(new Point(635, 1097));
                     waitUploadFile();
                 }
             };
@@ -67,7 +67,7 @@ namespace DDBuildHelper
                     Keybd.keybd_event(Keys.Enter, 0, 2, 0);
                     Thread.Sleep(200);
                     //点击上传数据库按钮
-                    MouseControl.Click(new Point(735, 1115));
+                    MouseControl.Click(new Point(735, 1097));
                     waitUploadDB();
                 }
             };
