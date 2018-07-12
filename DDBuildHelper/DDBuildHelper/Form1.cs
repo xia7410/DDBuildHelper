@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,8 +18,10 @@ namespace DDBuildHelper
     public partial class Form1 : Form
     {
 
+        #region 属性
         Image<Bgr, byte> tar;
-
+        public SynchronizationContext m_SyncContext = null;
+        #endregion
 
         public Form1()
         {
@@ -31,6 +34,7 @@ namespace DDBuildHelper
             int y = (700);
             this.StartPosition = FormStartPosition.Manual;
             this.Location = (Point)new Size(x, y);
+            m_SyncContext = SynchronizationContext.Current;
 
             //开启截屏
             GameCapture.Instance.init(this.Location, this.Size);
@@ -41,10 +45,26 @@ namespace DDBuildHelper
         }
 
 
+        public struct LogMode
+        {
+            public string content;
+            public Image<Bgr, byte> img;
+        }
+
+        public void showLogSafePost(string content, Image<Bgr, byte> img = null)
+        {
+            LogMode logMode = new LogMode();
+            logMode.content = content;
+            logMode.img = img;
+            m_SyncContext.Post(showLog, logMode);
+        }
+
         //展示日志
         int maxLog = 10;
-        public void showLog(string content, Image<Bgr, byte> img = null) {
-            EventItem item = new EventItem(content, img);
+        public void showLog(object state) {
+            LogMode logMode = (LogMode)state;
+
+            EventItem item = new EventItem(logMode.content, logMode.img);
             this.flowLayoutPanel1.Controls.Add(item);
             this.flowLayoutPanel1.Controls.SetChildIndex(item, 0);
 
@@ -57,13 +77,20 @@ namespace DDBuildHelper
             Refresh();
         }
 
-        public void clearLog() {
+
+
+        public void clearLogSafePost()
+        {
+            m_SyncContext.Post(clearLog, null);
+        }
+
+        public void clearLog(object state) {
             this.flowLayoutPanel1.Controls.Clear();
         }
 
         private void buttonclear_Click(object sender, EventArgs e)
         {
-            clearLog();
+            clearLogSafePost();
         }
 
         private void buttonStart_Click(object sender, EventArgs e)

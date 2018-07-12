@@ -33,7 +33,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.buttonclear = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
-            this.labelstate = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonStart
@@ -86,23 +85,12 @@
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
-            // labelstate
-            // 
-            this.labelstate.AutoSize = true;
-            this.labelstate.ForeColor = System.Drawing.Color.White;
-            this.labelstate.Location = new System.Drawing.Point(383, 114);
-            this.labelstate.Name = "labelstate";
-            this.labelstate.Size = new System.Drawing.Size(65, 12);
-            this.labelstate.TabIndex = 12;
-            this.labelstate.Text = "状态：休息";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(456, 267);
-            this.Controls.Add(this.labelstate);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonclear);
             this.Controls.Add(this.label1);
@@ -125,7 +113,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonclear;
         private System.Windows.Forms.Button buttonClose;
-        private System.Windows.Forms.Label labelstate;
     }
 }
 

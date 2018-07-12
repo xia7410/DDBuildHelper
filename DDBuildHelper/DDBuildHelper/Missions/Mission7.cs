@@ -103,6 +103,8 @@ namespace DDBuildHelper
                     Keybd.keybd_event(Keys.P, 0, 0, 0);
                     Keybd.keybd_event(Keys.P, 0, 2, 0);
                     Keybd.keybd_event(Keys.ControlKey, 0, 2, 0);
+
+                    Mission.Instance.moveNext();
                 }
             };
         }

@@ -35,22 +35,12 @@ namespace DDBuildHelper
         int missionIndex = 0;
         public Point ProjectPosition = new Point();//Project的位置，此位置很重要，后续多个操作都依赖此相对位置，所以保存下来。
         public BuildModel buildModel;
-
-
         Emgu.CV.Image<Bgr, byte> game;
         public Point MatchTemplatePosition;//模板匹配到的位置
-
-
-
         public Form1 mainform;
-
-
-
-        Thread requestMissionTh;      
-        bool getMission = false;//是否获取了任务
         #endregion
 
-
+        #region 单例
         private static Mission instance;
         public static Mission Instance {
             get {
@@ -61,59 +51,56 @@ namespace DDBuildHelper
                 return instance;
             }
         }
+        #endregion
 
         public void start(Form1 form)
         {
             mainform = form;
-          
-            ////询问任务
-            //while (true)
-            //{
-            //    Thread.Sleep(2000);
-            //    HttpReqHelper.requestSync(AppConst.WebUrl + "getmission", delegate (string res)
-            //    {
-            //        try
-            //        {
-            //            mission = Coding<MissionModel>.decode(res);
-            //            moveNext();
-            //            getMission = true ;
-            //        }
-            //        catch 
-            //        {
-            //            Debug.Print("未得到任务：" + res);
-            //        }
-            //    });
-            //    if (getMission)
-            //    {
-            //        break;
-            //    }
-            //}
-            missionIndex = 0;
-            buildModel = new BuildModel();
-            buildModel.Username = "55555";
-            buildModel.lib = 2;
-            buildModel.FileName = "000.fbx";
-            buildModel.Name = "测试商品";
-            buildModel.Maintype = 199;
-            buildModel.Sell = 0;
-            buildModel.Price = 999;
-            buildModel.Length = 12;
-            buildModel.Width = 13;
-            buildModel.Height = 14;
-            buildModel.Tags = "自助上传";
-
-
-            mainform.clearLog();
-            mainform.showLog("开始执行任务:"+ buildModel.FileName+ "   "+ buildModel.Name);
-
-            moveNext();
+            //询问任务
+            askMission();
         }
-    
 
+        //buildModel = new BuildModel();
+        //buildModel.Username = "55555";
+        //buildModel.lib = 2;
+        //buildModel.FileName = "000.fbx";
+        //buildModel.Name = "测试商品";
+        //buildModel.Maintype = 199;
+        //buildModel.Sell = 0;
+        //buildModel.Price = 999;
+        //buildModel.Length = 12;
+        //buildModel.Width = 13;
+        //buildModel.Height = 14;
+        //buildModel.Tags = "自助上传";                           
 
-
-      
-
+        //轮询任务
+        void askMission()
+        {
+            System.Windows.Forms.Timer pullMission = new System.Windows.Forms.Timer();
+            pullMission.Interval = 2000;
+            pullMission.Enabled = true;
+            pullMission.Start();
+            pullMission.Tick += (sen, eve) =>
+            {
+                HttpReqHelper.requestSync(AppConst.WebUrl + "getmission", delegate (string res)
+                {
+                    try
+                    {
+                        buildModel = Coding<BuildModel>.decode(res);
+                        mainform.clearLogSafePost();
+                        mainform.showLogSafePost("开始执行任务:" + buildModel.FileName + "   " + buildModel.Name);
+                        missionIndex = 0;
+                        moveNext();
+                        ((System.Windows.Forms.Timer)sen).Stop();
+                        ((System.Windows.Forms.Timer)sen).Dispose();
+                    }
+                    catch
+                    {
+                        mainform.showLogSafePost("暂无任务...");
+                    }
+                });                                                    
+            };
+        }
 
         
 
@@ -122,34 +109,39 @@ namespace DDBuildHelper
             switch (missionIndex)
             {
                 case 1:
-                    mainform.showLog("清理目录");
+                    mainform.showLogSafePost("清理目录");
                     Mission1.mission();                   
                     break;
                 case 2:
-                    mainform.showLog("建立目录");
+                    mainform.showLogSafePost("建立目录");
                     Mission2.mission();
                     break;
                 case 3:
-                    mainform.showLog("下载文件");
+                    mainform.showLogSafePost("下载文件");
                     Mission3.mission();
                     break;
                 case 4:
-                    mainform.showLog("拖拽预制体");
+                    mainform.showLogSafePost("拖拽预制体");
                     Mission4.mission();
                     break;
                 case 5:
-                    mainform.showLog("截图");
+                    mainform.showLogSafePost("截图");
                     Mission5.mission();
                     break;
                 case 6:
-                    mainform.showLog("打包");
+                    mainform.showLogSafePost("打包");
                     Mission6.mission();
                     break;
                 case 7:
-                    mainform.showLog("上传");
+                    mainform.showLogSafePost("上传");
                     Mission7.mission();
                     break;
+                case 8:
+                    mainform.showLogSafePost("任务完成，重新询问任务...");
+                    askMission();
+                    break;
                 default:
+                    MessageBox.Show("意外错误！");
                     break;
             }
         }
@@ -187,11 +179,11 @@ namespace DDBuildHelper
             Keybd.keybd_event(Keys.Enter, 0, 0, 0);
             Keybd.keybd_event(Keys.Enter, 0, 2, 0);
             //输出日志
-            mainform.showLog("出错!!!!!!:" + buildModel.FileName + "    " + buildModel.Name + "   " + content);
+            mainform.showLogSafePost("出错!!!!!!:" + buildModel.FileName + "    " + buildModel.Name + "   " + content);
             //写入log文件
             TxtLog.Log("出错任务：" + buildModel.FileName + "    " + buildModel.Name +"   "+ content);
             //重新轮询任务
-
+            askMission();
         }
 
 
