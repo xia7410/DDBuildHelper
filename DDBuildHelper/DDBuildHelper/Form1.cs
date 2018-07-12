@@ -42,6 +42,8 @@ namespace DDBuildHelper
             tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.tar);
             //开启助手服务器
             ServerForUnity.Instance.Start();
+            //注册键盘事件
+            KeyMgr.Instance.hook_KeyUp_Event += this.hook_KeyUp;
         }
 
 
@@ -101,6 +103,17 @@ namespace DDBuildHelper
         private void buttonClose_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        void hook_KeyUp(object sender, KeyEventArgs e)
+        {
+            Debug.Print("抬起" + e.KeyCode);
+            switch (e.KeyCode)
+            {
+                case Keys.F12:
+                    Environment.Exit(0);
+                    break;
+            }
         }
 
     }

@@ -69,6 +69,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Keybd.cs" />
+    <Compile Include="KeyboardHook.cs" />
+    <Compile Include="KeyMgr.cs" />
     <Compile Include="Missions\Mission.cs" />
     <Compile Include="Missions\Mission1.cs" />
     <Compile Include="Missions\Mission2.cs" />
