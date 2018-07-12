@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DDBuildHelper
 {
@@ -41,7 +42,7 @@ namespace DDBuildHelper
 
 
 
-
+        public Form1 mainform;
 
 
 
@@ -61,8 +62,10 @@ namespace DDBuildHelper
             }
         }
 
-        public void start()
+        public void start(Form1 form)
         {
+            mainform = form;
+          
             ////询问任务
             //while (true)
             //{
@@ -98,6 +101,11 @@ namespace DDBuildHelper
             buildModel.Width = 13;
             buildModel.Height = 14;
             buildModel.Tags = "自助上传";
+
+
+            mainform.clearLog();
+            mainform.showLog("开始执行任务:"+ buildModel.FileName+ "   "+ buildModel.Name);
+
             moveNext();
         }
     
@@ -114,24 +122,31 @@ namespace DDBuildHelper
             switch (missionIndex)
             {
                 case 1:
-                    Mission1.mission();
+                    mainform.showLog("清理目录");
+                    Mission1.mission();                   
                     break;
                 case 2:
+                    mainform.showLog("建立目录");
                     Mission2.mission();
                     break;
                 case 3:
+                    mainform.showLog("下载文件");
                     Mission3.mission();
                     break;
                 case 4:
+                    mainform.showLog("拖拽预制体");
                     Mission4.mission();
                     break;
                 case 5:
+                    mainform.showLog("截图");
                     Mission5.mission();
                     break;
                 case 6:
+                    mainform.showLog("打包");
                     Mission6.mission();
                     break;
                 case 7:
+                    mainform.showLog("上传");
                     Mission7.mission();
                     break;
                 default:
@@ -160,6 +175,23 @@ namespace DDBuildHelper
                 Mission.Instance.ProjectPosition = maxp;
             }
             return max;
+        }
+
+        //当运行失败后调用
+        public void onFaild(string content) {
+
+            //排除unity的弹出框
+            MouseControl.Click(AppConst.focuspos2);
+            Keybd.keybd_event(Keys.Enter, 0, 0, 0);
+            Keybd.keybd_event(Keys.Enter, 0, 2, 0);
+            Keybd.keybd_event(Keys.Enter, 0, 0, 0);
+            Keybd.keybd_event(Keys.Enter, 0, 2, 0);
+            //输出日志
+            mainform.showLog("出错!!!!!!:" + buildModel.FileName + "    " + buildModel.Name + "   " + content);
+            //写入log文件
+            TxtLog.Log("出错任务：" + buildModel.FileName + "    " + buildModel.Name +"   "+ content);
+            //重新轮询任务
+
         }
 
 

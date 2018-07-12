@@ -18,7 +18,6 @@ namespace DDBuildHelper
     {
 
         Image<Bgr, byte> tar;
-        Image<Bgr, byte> game;
 
 
         public Form1()
@@ -42,61 +41,41 @@ namespace DDBuildHelper
         }
 
 
+        //展示日志
+        int maxLog = 10;
+        public void showLog(string content, Image<Bgr, byte> img = null) {
+            EventItem item = new EventItem(content, img);
+            this.flowLayoutPanel1.Controls.Add(item);
+            this.flowLayoutPanel1.Controls.SetChildIndex(item, 0);
 
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            double result = MatchTemplate();
-            if (result > 0.98)
+            if (this.flowLayoutPanel1.Controls.Count > maxLog)
             {
-                Debug.Print("目标检测的结果： " + result);
-                MouseControl.Click(new Point(725 + 10, 24 + 15));
+                this.flowLayoutPanel1.Controls[this.flowLayoutPanel1.Controls.Count - 1].Dispose();
             }
-            else
-            {
-                Debug.Print("目标检测的结果： " + result);
-            }
-          
+            this.flowLayoutPanel1.VerticalScroll.Value = 0;
+            this.flowLayoutPanel1.VerticalScroll.Value = 0;
+            Refresh();
         }
 
-        double MatchTemplate()
+        public void clearLog() {
+            this.flowLayoutPanel1.Controls.Clear();
+        }
+
+        private void buttonclear_Click(object sender, EventArgs e)
         {
-            game = GameCapture.Instance.game;
-            Image<Gray, float> result = new Image<Gray, float>(game.Width, game.Height);
-            result = game.MatchTemplate(tar, TemplateMatchingType.CcorrNormed);
-            double min = 0;
-            double max = 0;
-            Point maxp = new Point(0, 0);
-            Point minp = new Point(0, 0);
-            CvInvoke.MinMaxLoc(result, ref min, ref max, ref minp, ref maxp);
-            //展示截图          
-            CvInvoke.Rectangle(game, new Rectangle(new Point(maxp.X, maxp.Y), new Size(200, 200)), new MCvScalar(0, 255, 255), 2);
-            this.imageBox1.Image = game;
-            Debug.Print(maxp.X + " " + maxp.Y);
-            return max;
+            clearLog();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonStart_Click(object sender, EventArgs e)
+        {           
+            DDBuildHelper.Mission.Instance.start(this);          
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
         {
-            string url = AppConst.WebUrl + "/Windows/resourcesbase/000.fbx";
-            HttpReqHelper.downloadFile(url, @"D:\000.fbx", delegate (string err)
-            {
-                MessageBox.Show("下载完了");
-            });
+            Environment.Exit(0);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            MouseControl.Drag(new Point(333,133),new Vector2(1,1),100);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            DDBuildHelper.Mission.Instance.start();
-        }
-
-      
     }
 
 

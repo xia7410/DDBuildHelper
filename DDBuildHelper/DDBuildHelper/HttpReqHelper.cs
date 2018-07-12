@@ -231,7 +231,7 @@ public class HttpReqHelper
         }
         catch (Exception err)
         {
-            Debug.Print("下载Unity文件失败" + err.ToString());
+            Debug.Print("下载文件失败" + err.ToString());
             if (callback != null) callback(err.ToString());
             return;
         }
@@ -262,7 +262,7 @@ public class HttpReqHelper
         }
         catch (Exception e)
         {
-            Debug.Print("ToolLib下载文件出错:" + e);
+            Debug.Print("下载文件出错:" + e);
             if (callback != null) callback(e.ToString());          
         }
         finally {

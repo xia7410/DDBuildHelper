@@ -38,7 +38,9 @@ namespace DDBuildHelper
             else
             {
                 Debug.Print("目标检测的结果： " + result);
-                MessageBox.Show("m4:未找到.res文件夹" + result);
+               // MessageBox.Show("m4:未找到.res文件夹" + result);
+                Mission.Instance.onFaild("m4:未找到.res文件夹" + result);
+                return;
             }
             //进行拖拽，找到拖拽点
             Thread.Sleep(200);
@@ -54,7 +56,9 @@ namespace DDBuildHelper
             else
             {
                 Debug.Print("目标检测的结果： " + result);
-                MessageBox.Show("m4:未找到待拖拽物体" + result);
+                //MessageBox.Show("m4:未找到待拖拽物体" + result);
+                Mission.Instance.onFaild("m4:未找到待拖拽物体" + result);
+                return;
             }
         }
         //拖拽至Hierarchy面板后调用
@@ -103,7 +107,9 @@ namespace DDBuildHelper
             else
             {
                 Debug.Print("目标检测的结果： " + result);
-                MessageBox.Show("m4:回拽时错误：" + result);
+              //  MessageBox.Show("m4:回拽时错误：" + result);
+                Mission.Instance.onFaild("m4:回拽时错误" + result);
+                return;
             }            
         }
 

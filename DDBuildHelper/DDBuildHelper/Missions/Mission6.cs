@@ -18,6 +18,7 @@ namespace DDBuildHelper
         #region 属性
         static Image<Bgr, byte> tar;
         static System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        static int timeCount = 0;//防止打包超时
         #endregion
 
 
@@ -33,6 +34,7 @@ namespace DDBuildHelper
             Keybd.keybd_event(Keys.Menu, 0, 2, 0);
 
             //检查打包是否完成
+            timeCount = 0;
             tar = new Image<Bgr, byte>(Properties.Resources.m6);          
             timer.Interval = 500;
             timer.Tick += new EventHandler(Timer_TimesUp);
@@ -40,10 +42,12 @@ namespace DDBuildHelper
             timer.Start();
         }
 
+      
         private static void Timer_TimesUp(object sender, EventArgs e)
         {
+           
             double result = Mission.Instance.MatchTemplate(tar);
-          
+
             if (result > 0.98)
             {
                 timer.Stop();
@@ -53,6 +57,12 @@ namespace DDBuildHelper
                 Keybd.keybd_event(Keys.Enter, 0, 2, 0);
 
                 Mission.Instance.moveNext();
+            }
+            timeCount++;
+            if (timeCount>60)//超过30秒
+            {
+                Mission.Instance.onFaild("m6:打包超时！");
+                return;
             }
         }
 

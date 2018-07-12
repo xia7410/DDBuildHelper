@@ -54,6 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EventItem.Designer.cs">
+      <DependentUpon>EventItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameCapture.cs" />
     <Compile Include="AppConst.cs" />
     <Compile Include="Form1.cs">
@@ -81,7 +87,11 @@
     <Compile Include="ServerForDDBuild\SocketModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TxtLog.cs" />
     <Compile Include="Vector2.cs" />
+    <EmbeddedResource Include="EventItem.resx">
+      <DependentUpon>EventItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

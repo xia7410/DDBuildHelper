@@ -55,7 +55,9 @@ namespace DDBuildHelper
             else
             {
                 Debug.Print("目标检测的结果： " + result);
-                MessageBox.Show("m5:未找到pre图片" + result);
+             //   MessageBox.Show("m5:未找到pre图片" + result);
+                Mission.Instance.onFaild("m5:未找到pre图片" + result);
+                return;
             }
         }
 

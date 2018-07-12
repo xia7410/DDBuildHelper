@@ -21,14 +21,16 @@ namespace DDBuildHelper
             {
                 if (err != null)
                 {
-                    MessageBox.Show("下载FBX出错" + err);
+                   // MessageBox.Show("下载FBX出错" + err);
+                    Mission.Instance.onFaild("m3下载FBX出错" + err);
+                    return;
                 }
                 else
                 {
                     //切换焦点
                     MouseControl.Click(AppConst.focuspos1);
                     Thread.Sleep(200);
-                    MouseControl.Click(AppConst.focuspos2);
+                    MouseControl.Click(AppConst.focuspos2);                    
                     Mission.Instance.moveNext();
                 }
             });

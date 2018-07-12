@@ -28,6 +28,11 @@ namespace DDBuildHelper
             Keybd.keybd_event(Keys.ControlKey, 0, 2, 0);
 
             //检查unity是否已启动          
+            waitUnityRun();
+        }
+
+        //等待unity启动完成
+        private static void waitUnityRun() {
             tar = new Image<Bgr, byte>(Properties.Resources.m7);
             System.Windows.Forms.Timer timerWaitUnityRun = new System.Windows.Forms.Timer();
             timerWaitUnityRun.Interval = 1;
