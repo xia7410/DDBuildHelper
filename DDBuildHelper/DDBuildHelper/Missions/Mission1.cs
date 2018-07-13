@@ -10,10 +10,17 @@ namespace DDBuildHelper
     public class Mission1
     {
 
-        //任务1 清理furniture文件夹
+        //任务1 清理furniture文件夹 并 建立新文件夹
         public static void mission() {
+            //清理furniture文件夹
             DelectDir(AppConst.ddBuildResourcesPath);
-            Mission.Instance.moveNext();
+            //建立新文件夹
+            string code = Mission.Instance.buildModel.FileName.Substring(0, Mission.Instance.buildModel.FileName.IndexOf('.'));
+            System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_MX1.bundle");
+            System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_MX1.res");
+            System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_FA1pre.bundle");
+            Mission.Instance.mainform.showLog("目录完成...");
+            Mission2.mission();
         }
 
 

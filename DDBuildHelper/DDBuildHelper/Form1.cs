@@ -76,9 +76,23 @@ namespace DDBuildHelper
             }
             this.flowLayoutPanel1.VerticalScroll.Value = 0;
             this.flowLayoutPanel1.VerticalScroll.Value = 0;
-            Refresh();
+            this.flowLayoutPanel1.Refresh();
         }
 
+        public void showLog(string content, Image<Bgr, byte> img = null)
+        {     
+            EventItem item = new EventItem(content, img);
+            this.flowLayoutPanel1.Controls.Add(item);
+            this.flowLayoutPanel1.Controls.SetChildIndex(item, 0);
+
+            if (this.flowLayoutPanel1.Controls.Count > maxLog)
+            {
+                this.flowLayoutPanel1.Controls[this.flowLayoutPanel1.Controls.Count - 1].Dispose();
+            }
+            this.flowLayoutPanel1.VerticalScroll.Value = 0;
+            this.flowLayoutPanel1.VerticalScroll.Value = 0;
+            this.flowLayoutPanel1.Refresh();
+        }
 
 
         public void clearLogSafePost()
@@ -90,15 +104,16 @@ namespace DDBuildHelper
             this.flowLayoutPanel1.Controls.Clear();
         }
 
-        private void buttonclear_Click(object sender, EventArgs e)
+        public void clearLog()
         {
-            clearLogSafePost();
+            this.flowLayoutPanel1.Controls.Clear();
         }
 
-        private void buttonStart_Click(object sender, EventArgs e)
-        {           
-            DDBuildHelper.Mission.Instance.start(this);          
+        private void buttonclear_Click(object sender, EventArgs e)
+        {
+            clearLog();
         }
+
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
@@ -107,7 +122,14 @@ namespace DDBuildHelper
 
         void hook_KeyUp(object sender, KeyEventArgs e)
         {
-            Debug.Print("抬起" + e.KeyCode);
+            
+            switch (e.KeyCode)
+            {
+                case Keys.F11:
+                    DDBuildHelper.Mission.Instance.start(this);
+                    break;
+            }
+
             switch (e.KeyCode)
             {
                 case Keys.F12:

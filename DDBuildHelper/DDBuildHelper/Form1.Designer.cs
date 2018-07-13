@@ -28,22 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonStart = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonclear = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // buttonStart
-            // 
-            this.buttonStart.Location = new System.Drawing.Point(376, 232);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(75, 23);
-            this.buttonStart.TabIndex = 6;
-            this.buttonStart.Text = "开始";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -95,7 +84,6 @@
             this.Controls.Add(this.buttonclear);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.buttonStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.ShowInTaskbar = false;
@@ -108,7 +96,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonclear;

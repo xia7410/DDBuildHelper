@@ -78,7 +78,6 @@
     <Compile Include="Missions\Mission4.cs" />
     <Compile Include="Missions\Mission5.cs" />
     <Compile Include="Missions\Mission6.cs" />
-    <Compile Include="Missions\Mission7.cs" />
     <Compile Include="MouseControl.cs" />
     <Compile Include="HttpReqHelper.cs" />
     <Compile Include="ServerForDDBuild\ByteArray.cs" />

@@ -3,7 +3,6 @@ using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,74 +14,66 @@ namespace DDBuildHelper
 {
     public class Mission5
     {
-        static Image<Bgr, byte> tar;
-        static Image<Bgr, byte> game;
-      
 
-        //任务5 截图
+        #region 属性
+        static Image<Bgr, byte> tar;
+        
+        static int timeCount = 0;//防止打包超时
+        #endregion
+
+        static bool to6 = false;
+        //任务5 打包
         public static void mission()
         {
-            //进行截图
+            to6 = false;
+            //按下alt+b
             Thread.Sleep(500);
-            Image<Bgr, byte> game;
-            game = GameCapture.Instance.game;
-            Image<Bgr, byte> preImg = game.Copy(new Rectangle( new Point (900,168), new Size (600,600)));
-            //保存截图
-            string code = Mission.Instance.buildModel.FileName.Substring(0, Mission.Instance.buildModel.FileName.IndexOf('.'));
-            string path = AppConst.ddBuildResourcesPath + code + @"_FA1pre.bundle\pre.jpg";
-            preImg.ToBitmap().Save(path);
-            //删掉hierarchy面板中的model
-            MouseControl.Click(new Point(Mission.Instance.MatchTemplatePosition.X + 5, Mission.Instance.MatchTemplatePosition.Y + 5));
-            Keybd.keybd_event(Keys.Delete, 0, 0, 0);
-            Keybd.keybd_event(Keys.Delete, 0, 2, 0);
-            Thread.Sleep(200);
-            //切换焦点
-            MouseControl.Click(AppConst.focuspos1);
-            Thread.Sleep(500);
-            //点击_pre.bundle文件夹
-            MouseControl.Click(new Point(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y + 197));
-            Thread.Sleep(1000);
-            //点击pre图片，随后进行设置
-            tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m5);//先找到project位置
-            double result = Mission.Instance.MatchTemplate(tar);
-            if (result > 0.98)
-            {
-                Debug.Print("目标检测的结果： " + result);
-                MouseControl.Click(new Point(Mission.Instance.MatchTemplatePosition.X, Mission.Instance.MatchTemplatePosition.Y + 20));
-                //进行图片设置
-                setting();
-            }
-            else
-            {
-                Debug.Print("目标检测的结果： " + result);
-             //   MessageBox.Show("m5:未找到pre图片" + result);
-                Mission.Instance.onFaild("m5:未找到pre图片" + result);
-                return;
-            }
-        }
+            Keybd.keybd_event(Keys.Menu, 0, 0, 0);
+            Keybd.keybd_event(Keys.B, 0, 0, 0);
 
-        //进行图片设置
-        static void setting() {
-            Thread.Sleep(300);
-            //点击textureType
-            MouseControl.Click(new Point(2300,147));
-            Thread.Sleep(300);
-            //点击advanced
-            MouseControl.Click(new Point(2300, 346));
-            Thread.Sleep(300);
-            //点击Read/Write Enabled
-            MouseControl.Click(new Point(2283, 237));
-            Thread.Sleep(300);
-            //点击format
-            MouseControl.Click(new Point(2300, 550));
-            Thread.Sleep(300);
-            //点击RGBA 32bit
-            MouseControl.Click(new Point(2300, 814));
-            Thread.Sleep(300);
-            //点击apply
-            MouseControl.Click(new Point(2533, 579));
-            Mission.Instance.moveNext();
-        }
+            Keybd.keybd_event(Keys.B, 0, 2, 0);
+            Keybd.keybd_event(Keys.Menu, 0, 2, 0);
 
+            //检查打包是否完成
+            timeCount = 0;
+            tar = new Image<Bgr, byte>(Properties.Resources.m6);
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = 500;           
+            timer.Enabled = true;
+            timer.Start();
+            timer.Tick += (sen, eve) =>
+            {
+                double result = Mission.Instance.MatchTemplate(tar);
+
+                if (result > 0.98)
+                {
+                    //timer.Stop();
+                    //timer.Dispose();
+                    ((System.Windows.Forms.Timer)sen).Stop();
+                    ((System.Windows.Forms.Timer)sen).Dispose();
+
+                    if (to6 == false)
+                    {
+                        //点击确定按钮
+                        Keybd.keybd_event(Keys.Enter, 0, 0, 0);
+                        Keybd.keybd_event(Keys.Enter, 0, 2, 0);
+                        Mission.Instance.mainform.showLog("打包完成...");
+                        Mission6.mission();
+                        to6 = true;
+                    }
+                    else
+                    {
+                        Mission.Instance.mainform.showLog("这不该发生，已经去6了，还要去干吗？");
+                    }
+
+                }
+                timeCount++;
+                if (timeCount > 60)//超过30秒
+                {
+                    Mission.Instance.onFaild("m6:打包超时！");
+                    return;
+                }
+            };
+        }     
     }
 }

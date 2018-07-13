@@ -1,8 +1,8 @@
 ﻿using Emgu.CV;
-using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,58 +14,102 @@ namespace DDBuildHelper
 {
     public class Mission6
     {
-
-        #region 属性
         static Image<Bgr, byte> tar;
-        static System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        static int timeCount = 0;//防止打包超时
-        #endregion
 
 
-        //任务6 打包
+        //任务6 运行DDBuild
         public static void mission()
         {
-            //按下alt+b
-            Thread.Sleep(500);
-            Keybd.keybd_event(Keys.Menu, 0, 0, 0);
-            Keybd.keybd_event(Keys.B, 0, 0, 0);
+            //运行unity
+            Keybd.keybd_event(Keys.ControlKey, 0, 0, 0);
+            Keybd.keybd_event(Keys.P, 0, 0, 0);
+            Keybd.keybd_event(Keys.P, 0, 2, 0);
+            Keybd.keybd_event(Keys.ControlKey, 0, 2, 0);
 
-            Keybd.keybd_event(Keys.B, 0, 2, 0);
-            Keybd.keybd_event(Keys.Menu, 0, 2, 0);
-
-            //检查打包是否完成
-            timeCount = 0;
-            tar = new Image<Bgr, byte>(Properties.Resources.m6);          
-            timer.Interval = 500;
-            timer.Tick += new EventHandler(Timer_TimesUp);
-            timer.Enabled = true;
-            timer.Start();
+            //检查unity是否已启动          
+            waitUnityRun();
         }
 
-      
-        private static void Timer_TimesUp(object sender, EventArgs e)
+        //等待unity启动完成
+        private static void waitUnityRun() {
+            tar = new Image<Bgr, byte>(Properties.Resources.m7);
+            System.Windows.Forms.Timer timerWaitUnityRun = new System.Windows.Forms.Timer();
+            timerWaitUnityRun.Interval = 1;
+            timerWaitUnityRun.Enabled = true;
+            timerWaitUnityRun.Start();
+            timerWaitUnityRun.Tick += (sen, eve) =>
+            {
+                double result = Mission.Instance.MatchTemplate(tar);
+                if (result > 0.98)
+                {
+                    ((System.Windows.Forms.Timer)sen).Stop();
+                    ((System.Windows.Forms.Timer)sen).Dispose();
+                    //unity 已经启动，点击上传文件按钮
+                    MouseControl.Click(new Point(635, 1097));
+                    Mission.Instance.mainform.showLog("unity已启动...");
+                    waitUploadFile();
+                }
+            };
+        }
+
+        //等待文件上传完成
+        private static void waitUploadFile()
         {
-           
-            double result = Mission.Instance.MatchTemplate(tar);
-
-            if (result > 0.98)
+            tar = new Image<Bgr, byte>(Properties.Resources.m7_2);
+            System.Windows.Forms.Timer timerWaitUploadFile = new System.Windows.Forms.Timer();
+            timerWaitUploadFile.Interval = 1;
+            timerWaitUploadFile.Enabled = true;
+            timerWaitUploadFile.Start();
+            timerWaitUploadFile.Tick += (sen, eve) =>
             {
-                timer.Stop();
-                timer.Dispose();
-                //点击确定按钮
-                Keybd.keybd_event(Keys.Enter, 0, 0, 0);
-                Keybd.keybd_event(Keys.Enter, 0, 2, 0);
-
-                Mission.Instance.moveNext();
-            }
-            timeCount++;
-            if (timeCount>60)//超过30秒
-            {
-                Mission.Instance.onFaild("m6:打包超时！");
-                return;
-            }
+                double result = Mission.Instance.MatchTemplate(tar);
+                if (result > 0.98)
+                {
+                    ((System.Windows.Forms.Timer)sen).Stop();
+                    ((System.Windows.Forms.Timer)sen).Dispose();
+                    //文件上传完成
+                    Keybd.keybd_event(Keys.Enter, 0, 0, 0);
+                    Keybd.keybd_event(Keys.Enter, 0, 2, 0);
+                    Thread.Sleep(200);
+                    //点击上传数据库按钮
+                    MouseControl.Click(new Point(735, 1097));
+                    Mission.Instance.mainform.showLog("文件已上传...");
+                    waitUploadDB();
+                }
+            };
         }
 
-     
+        //检查数据库上传完成
+        private static void waitUploadDB()
+        {
+            tar = new Image<Bgr, byte>(Properties.Resources.m7_3);
+            System.Windows.Forms.Timer timerWaitUploadDB = new System.Windows.Forms.Timer();
+            timerWaitUploadDB.Interval = 1;
+            timerWaitUploadDB.Enabled = true;
+            timerWaitUploadDB.Start();
+            timerWaitUploadDB.Tick += (sen, eve) =>
+            {
+                double result = Mission.Instance.MatchTemplate(tar);
+                if (result > 0.98)
+                {
+                    ((System.Windows.Forms.Timer)sen).Stop();
+                    ((System.Windows.Forms.Timer)sen).Dispose();
+                    //数据库上传完成
+                    Keybd.keybd_event(Keys.Enter, 0, 0, 0);
+                    Keybd.keybd_event(Keys.Enter, 0, 2, 0);
+                    Thread.Sleep(200);
+
+                    //停止运行unity
+                    Keybd.keybd_event(Keys.ControlKey, 0, 0, 0);
+                    Keybd.keybd_event(Keys.P, 0, 0, 0);
+                    Keybd.keybd_event(Keys.P, 0, 2, 0);
+                    Keybd.keybd_event(Keys.ControlKey, 0, 2, 0);
+                    Mission.Instance.mainform.showLog("db已上传...");
+                    Mission.Instance.missionOK();
+                }
+            };
+        }
+
+
     }
 }

@@ -1,30 +1,43 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DDBuildHelper
 {
-   public class Mission2
+    public class Mission2
     {
-
-
-
-        //任务2 建立打包目录
+        //任务2 下载fbx文件
         public static void mission()
         {
-            string code = Mission.Instance.buildModel.FileName.Substring(0,Mission.Instance.buildModel.FileName.IndexOf('.'));
-            System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath+ code + "_MX1.bundle");
-            System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_MX1.res");
-            System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_FA1pre.bundle");
-            Mission.Instance.moveNext();
+            string url = AppConst.WebUrl + "/Windows/resourcesbase/" + Mission.Instance.buildModel.FileName;
+            string code = Mission.Instance.buildModel.FileName.Substring(0, Mission.Instance.buildModel.FileName.IndexOf('.'));
+            string path = AppConst.ddBuildResourcesPath + code + @"_MX1.res\" + Mission.Instance.buildModel.FileName;
+            HttpReqHelper.downloadFile(url, path, delegate (string err)
+            {
+                if (err != null)
+                {
+                   // MessageBox.Show("下载FBX出错" + err);
+                    Mission.Instance.onFaild("m3下载FBX出错" + err);
+                    return;
+                }
+                else
+                {
+                    //切换焦点
+                    MouseControl.Click(AppConst.focuspos1);
+                    Thread.Sleep(1000);
+                    MouseControl.Click(AppConst.focuspos2);
+                    Mission.Instance.mainform.showLog("下载fbx完成...");
+                    Mission3.mission();
+                }
+            });
+
+
         }
 
-      
     }
 }

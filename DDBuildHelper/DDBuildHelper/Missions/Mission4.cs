@@ -16,107 +16,74 @@ namespace DDBuildHelper
     public class Mission4
     {
         static Image<Bgr, byte> tar;
-        static int waitUnityLoadFbx = 5000;//等待unity读取fbx的时间。
-     
+      
 
-
-        //任务4 拖拽预制体
+        //任务4 截图
         public static void mission()
         {
-
-            Thread.Sleep(waitUnityLoadFbx);
-
-            //点选.res文件夹
-            tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m4);//先找到project位置
-            double result =Mission.Instance. MatchTemplate(tar);
-            if (result > 0.98)
-            {
-                Debug.Print("目标检测的结果： " + result);
-                MouseControl.Click(new Point(30, Mission.Instance.MatchTemplatePosition.Y + 230));//点选.res文件夹
-                MouseControl.Click(new Point(30, Mission.Instance.MatchTemplatePosition.Y + 230));//点选.res文件夹  这里必须点两下！！！              
-            }
-            else
-            {
-                Debug.Print("目标检测的结果： " + result);
-               // MessageBox.Show("m4:未找到.res文件夹" + result);
-                Mission.Instance.onFaild("m4:未找到.res文件夹" + result);
-                return;
-            }
-            //进行拖拽，找到拖拽点
-            Thread.Sleep(200);
-            MouseControl.Click(new Point(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y-100)); //拖拽之前先点击一下hierarchy面板
-            tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m4_2);
+            //进行截图
             Thread.Sleep(500);
-            result = Mission.Instance.MatchTemplate(tar);
-            if (result > 0.98)
-            {
-                Debug.Print("目标检测的结果： " + result);
-                MouseControl.Drag(new Point(Mission.Instance.MatchTemplatePosition.X + 20, Mission.Instance.MatchTemplatePosition.Y + 5), new Vector2(-1, -1), 120, onDragedToHierarchy);
-            }
-            else
-            {
-                Debug.Print("目标检测的结果： " + result);
-                //MessageBox.Show("m4:未找到待拖拽物体" + result);
-                Mission.Instance.onFaild("m4:未找到待拖拽物体" + result);
-                return;
-            }
-        }
-        //拖拽至Hierarchy面板后调用
-        static void onDragedToHierarchy() {
-            //为预制体改名字
+            Image<Bgr, byte> game;
+            game = GameCapture.Instance.game;
+            Image<Bgr, byte> preImg = game.Copy(new Rectangle( new Point (900,168), new Size (600,600)));
+            //保存截图
+            string code = Mission.Instance.buildModel.FileName.Substring(0, Mission.Instance.buildModel.FileName.IndexOf('.'));
+            string path = AppConst.ddBuildResourcesPath + code + @"_FA1pre.bundle\pre.jpg";
+            preImg.ToBitmap().Save(path);
+            //删掉hierarchy面板中的model
+            MouseControl.Click(new Point(Mission.Instance.MatchTemplatePosition.X + 5, Mission.Instance.MatchTemplatePosition.Y + 5));
+            Keybd.keybd_event(Keys.Delete, 0, 0, 0);
+            Keybd.keybd_event(Keys.Delete, 0, 2, 0);
+            Thread.Sleep(200);
+            //切换焦点
+            MouseControl.Click(AppConst.focuspos1);
             Thread.Sleep(1000);
-            Keybd.keybd_event(Keys.F2, 0, 0, 0);
-            Keybd.keybd_event(Keys.F2, 0, 2, 0);
-            Thread.Sleep(200);
-            Keybd.keybd_event(Keys.M, 0, 0, 0);
-            Keybd.keybd_event(Keys.M, 0, 2, 0);
-            Thread.Sleep(200);
-            Keybd.keybd_event(Keys.O, 0, 0, 0);
-            Keybd.keybd_event(Keys.O, 0, 2, 0);
-            Thread.Sleep(200);
-            Keybd.keybd_event(Keys.D, 0, 0, 0);
-            Keybd.keybd_event(Keys.D, 0, 2, 0);
-            Thread.Sleep(200);
-            Keybd.keybd_event(Keys.E, 0, 0, 0);
-            Keybd.keybd_event(Keys.E, 0, 2, 0);
-            Thread.Sleep(200);
-            Keybd.keybd_event(Keys.L, 0, 0, 0);
-            Keybd.keybd_event(Keys.L, 0, 2, 0);
-            Thread.Sleep(200);
-            Keybd.keybd_event(Keys.Enter, 0, 0, 0);
-            Keybd.keybd_event(Keys.Enter, 0, 2, 0);
-            dragToBundleFolder();
-            
-        }
-
-        //将预制体拖拽到.bundle文件夹中去
-        static void dragToBundleFolder() {
+            MouseControl.Click(AppConst.focuspos2);
+            Thread.Sleep(3000);
+            //点击_pre.bundle文件夹
+            MouseControl.Click(new Point(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y + 202));
             Thread.Sleep(500);
-            tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m4_3);
+            //点击pre图片，随后进行设置
+            tar = new Image<Bgr, byte>(DDBuildHelper.Properties.Resources.m5);//找到预览图位置
             double result = Mission.Instance.MatchTemplate(tar);
             if (result > 0.98)
             {
                 Debug.Print("目标检测的结果： " + result);
-                //拖拽回去之前先双击，方便截图
-                MouseControl.Click(new Point(Mission.Instance.MatchTemplatePosition.X + 5, Mission.Instance.MatchTemplatePosition.Y + 5));
-                Thread.Sleep(100);
-                MouseControl.Click(new Point(Mission.Instance.MatchTemplatePosition.X + 5, Mission.Instance.MatchTemplatePosition.Y + 5));
-                //进行拖拽
-                MouseControl.Drag2(new Vector2(Mission.Instance.MatchTemplatePosition.X+5, Mission.Instance.MatchTemplatePosition.Y+5), new Vector2(Mission.Instance.ProjectPosition.X, Mission.Instance.ProjectPosition.Y + 215), ondragedToBundleFolder);
+                MouseControl.Click(new Point(Mission.Instance.MatchTemplatePosition.X, Mission.Instance.MatchTemplatePosition.Y + 20));
+                //进行图片设置
+                setting();
             }
             else
             {
                 Debug.Print("目标检测的结果： " + result);
-              //  MessageBox.Show("m4:回拽时错误：" + result);
-                Mission.Instance.onFaild("m4:回拽时错误" + result);
+             //   MessageBox.Show("m5:未找到pre图片" + result);
+                Mission.Instance.onFaild("m5:未找到pre图片" + result);
                 return;
-            }            
+            }
         }
 
-        //将预制体拖拽到.bundle文件夹后调用
-        static void ondragedToBundleFolder()
-        {         
-            Mission.Instance.moveNext();
+        //进行图片设置
+        static void setting() {
+            Thread.Sleep(300);
+            //点击textureType
+            MouseControl.Click(new Point(2300,147));
+            Thread.Sleep(300);
+            //点击advanced
+            MouseControl.Click(new Point(2300, 346));
+            Thread.Sleep(300);
+            //点击Read/Write Enabled
+            MouseControl.Click(new Point(2283, 237));
+            Thread.Sleep(300);
+            //点击format
+            MouseControl.Click(new Point(2300, 550));
+            Thread.Sleep(300);
+            //点击RGBA 32bit
+            MouseControl.Click(new Point(2300, 814));
+            Thread.Sleep(300);
+            //点击apply
+            MouseControl.Click(new Point(2533, 579));
+            Mission.Instance.mainform.showLog("预览图完成...");
+            Mission5.mission();
         }
 
     }
