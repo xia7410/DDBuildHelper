@@ -5,3 +5,27 @@
 2018/7/13 18:07:55 出错任务：000.fbx    测试商品2   m4:未找到待拖拽物体0.937726736068726
 2018/7/13 18:08:06 出错任务：000.fbx    测试商品2   m4:未找到待拖拽物体0.937726736068726
 2018/7/13 18:08:18 出错任务：000.fbx    测试商品2   m4:未找到待拖拽物体0.937726736068726
+2018/7/16 14:03:48 出错任务：bbb.fbx    test2   m3下载FBX出错System.Net.WebException: 远程服务器返回错误: (404) 未找到。
+   在 System.Net.HttpWebRequest.GetResponse()
+   在 HttpReqHelper.downloadFile(String url, String path, AssetLoadEvent callback, AssetLoadProgress progress) 位置 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\HttpReqHelper.cs:行号 230
+2018/7/16 14:03:51 出错任务：bbb.fbx    test2   m3下载FBX出错System.Net.WebException: 远程服务器返回错误: (404) 未找到。
+   在 System.Net.HttpWebRequest.GetResponse()
+   在 HttpReqHelper.downloadFile(String url, String path, AssetLoadEvent callback, AssetLoadProgress progress) 位置 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\HttpReqHelper.cs:行号 230
+2018/7/16 14:03:54 出错任务：bbb.fbx    test2   m3下载FBX出错System.Net.WebException: 远程服务器返回错误: (404) 未找到。
+   在 System.Net.HttpWebRequest.GetResponse()
+   在 HttpReqHelper.downloadFile(String url, String path, AssetLoadEvent callback, AssetLoadProgress progress) 位置 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\HttpReqHelper.cs:行号 230
+2018/7/16 14:03:57 出错任务：bbb.fbx    test2   m3下载FBX出错System.Net.WebException: 远程服务器返回错误: (404) 未找到。
+   在 System.Net.HttpWebRequest.GetResponse()
+   在 HttpReqHelper.downloadFile(String url, String path, AssetLoadEvent callback, AssetLoadProgress progress) 位置 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\HttpReqHelper.cs:行号 230
+2018/7/16 14:04:01 出错任务：bbb.fbx    test2   m3下载FBX出错System.Net.WebException: 远程服务器返回错误: (404) 未找到。
+   在 System.Net.HttpWebRequest.GetResponse()
+   在 HttpReqHelper.downloadFile(String url, String path, AssetLoadEvent callback, AssetLoadProgress progress) 位置 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\HttpReqHelper.cs:行号 230
+2018/7/16 14:04:04 出错任务：bbb.fbx    test2   m3下载FBX出错System.Net.WebException: 远程服务器返回错误: (404) 未找到。
+   在 System.Net.HttpWebRequest.GetResponse()
+   在 HttpReqHelper.downloadFile(String url, String path, AssetLoadEvent callback, AssetLoadProgress progress) 位置 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\HttpReqHelper.cs:行号 230
+2018/7/16 14:04:07 出错任务：bbb.fbx    test2   m3下载FBX出错System.Net.WebException: 远程服务器返回错误: (404) 未找到。
+   在 System.Net.HttpWebRequest.GetResponse()
+   在 HttpReqHelper.downloadFile(String url, String path, AssetLoadEvent callback, AssetLoadProgress progress) 位置 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\HttpReqHelper.cs:行号 230
+2018/7/16 14:04:10 出错任务：bbb.fbx    test2   m3下载FBX出错System.Net.WebException: 远程服务器返回错误: (404) 未找到。
+   在 System.Net.HttpWebRequest.GetResponse()
+   在 HttpReqHelper.downloadFile(String url, String path, AssetLoadEvent callback, AssetLoadProgress progress) 位置 C:\Users\Administrator\Desktop\DDBuildHelper\DDBuildHelper\DDBuildHelper\HttpReqHelper.cs:行号 230

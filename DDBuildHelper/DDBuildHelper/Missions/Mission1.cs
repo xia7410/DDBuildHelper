@@ -15,7 +15,7 @@ namespace DDBuildHelper
             //清理furniture文件夹
             DelectDir(AppConst.ddBuildResourcesPath);
             //建立新文件夹
-            string code = Mission.Instance.buildModel.FileName.Substring(0, Mission.Instance.buildModel.FileName.IndexOf('.'));
+            string code = Mission.Instance.buildModel.Filename.Substring(0, Mission.Instance.buildModel.Filename.IndexOf('.'));
             System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_MX1.bundle");
             System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_MX1.res");
             System.IO.Directory.CreateDirectory(AppConst.ddBuildResourcesPath + code + "_FA1pre.bundle");

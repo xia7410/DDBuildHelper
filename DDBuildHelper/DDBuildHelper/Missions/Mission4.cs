@@ -27,7 +27,7 @@ namespace DDBuildHelper
             game = GameCapture.Instance.game;
             Image<Bgr, byte> preImg = game.Copy(new Rectangle( new Point (900,168), new Size (600,600)));
             //保存截图
-            string code = Mission.Instance.buildModel.FileName.Substring(0, Mission.Instance.buildModel.FileName.IndexOf('.'));
+            string code = Mission.Instance.buildModel.Filename.Substring(0, Mission.Instance.buildModel.Filename.IndexOf('.'));
             string path = AppConst.ddBuildResourcesPath + code + @"_FA1pre.bundle\pre.jpg";
             preImg.ToBitmap().Save(path);
             //删掉hierarchy面板中的model

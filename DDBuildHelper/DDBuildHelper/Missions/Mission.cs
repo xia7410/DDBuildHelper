@@ -17,8 +17,8 @@ namespace DDBuildHelper
 
     public struct BuildModel {
         public string Username;
-        public int lib;
-        public string FileName;
+        public int Lib;
+        public string Filename;
         public string Name;
         public int Maintype;
         public int Sell;
@@ -61,41 +61,20 @@ namespace DDBuildHelper
             ask();
         }
 
-        //buildModel = new BuildModel();
-        //buildModel.Username = "55555";
-
-        //buildModel.lib = 2;
-
-        //buildModel.FileName = "000.fbx";
-
-        //buildModel.Name = "测试商品2";
-
-        //buildModel.Maintype = 199;
-
-        //buildModel.Sell = 0;
-
-        //buildModel.Price = 999;
-
-        //buildModel.Length = 12;
-
-        //buildModel.Width = 13;
-
-        //buildModel.Height = 14;
-
-        //buildModel.Tags = "自助上传";
+       
         void ask() {
-            HttpReqHelper.requestSync(AppConst.WebUrl + "buildHelper", delegate (string res)
+            HttpReqHelper.requestSync(AppConst.WebUrl + "buildHelper?protocol=1", delegate (string res)
             {
                 try
                 {
                     buildModel = Coding<BuildModel>.decode(res);
                     mainform.clearLogSafePost();
-                    mainform.showLogSafePost("开始执行任务:" + buildModel.FileName + "   " + buildModel.Name);
+                    mainform.showLogSafePost("开始执行任务:" + buildModel.Filename + "   " + buildModel.Name);
                     startMissionSafePost();
                 }
                 catch (Exception err)
                 {
-                    mainform.showLogSafePost(err.ToString());
+                    mainform.showLogSafePost(res+"  "+err.ToString());
                     mainform.showLogSafePost("暂无任务...");
                     Thread.Sleep(3000);
                     ask();
@@ -118,9 +97,16 @@ namespace DDBuildHelper
         public void missionOK()
         {
             mainform.showLog("任务完成，重新询问任务...");
-            Thread.Sleep(3000);
-            // MessageBox.Show("任务完成，重新询问任务");
-            ask();
+            //通知服务器完成任务
+            string code = buildModel.Filename.Substring(0, buildModel.Filename.IndexOf('.'));
+            HttpReqHelper.requestSync(AppConst.WebUrl + "buildHelper?protocol=2&fbx="+ code, delegate (string res)
+            {
+                Thread.Sleep(3000);
+                // MessageBox.Show("任务完成，重新询问任务");
+                ask();
+            });
+
+           
         }
 
         public double MatchTemplate(Emgu.CV.Image<Bgr, byte> tar)
@@ -155,9 +141,9 @@ namespace DDBuildHelper
             Keybd.keybd_event(Keys.Enter, 0, 0, 0);
             Keybd.keybd_event(Keys.Enter, 0, 2, 0);
             //输出日志
-            mainform.showLog("出错!3秒后重启:" + buildModel.FileName + "    " + buildModel.Name + "   " + content);
+            mainform.showLog("出错!3秒后重启:" + buildModel.Filename + "    " + buildModel.Name + "   " + content);
             //写入log文件
-            TxtLog.Log("出错任务：" + buildModel.FileName + "    " + buildModel.Name +"   "+ content);
+            TxtLog.Log("出错任务：" + buildModel.Filename + "    " + buildModel.Name +"   "+ content);
             //重新轮询任务
             Thread.Sleep(3000);
             ask();
