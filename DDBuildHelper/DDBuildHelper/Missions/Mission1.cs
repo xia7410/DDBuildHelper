@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -46,7 +47,8 @@ namespace DDBuildHelper
             }
             catch (Exception e)
             {
-                throw;
+                //   throw;
+                Debug.Print("目录是空的，无需删除"+ e);
             }
         }
     }
